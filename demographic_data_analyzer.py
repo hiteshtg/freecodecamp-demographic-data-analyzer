@@ -23,6 +23,7 @@ def calculate_demographic_data(print_data=True):
     # with and without `Bachelors`, `Masters`, or `Doctorate`
     higher_education = df[df['education'].isin(['Bachelors', 'Masters', 'Doctorate'])]
     lower_education = df[~df['education'].isin(['Bachelors', 'Masters', 'Doctorate'])]
+    
     high_rich = len(higher_education[higher_education['salary'] == '>50K'])
     low_rich = len(lower_education[lower_education['salary'] == '>50K'])
     
@@ -47,7 +48,8 @@ def calculate_demographic_data(print_data=True):
     highest_earning_country_percentage = round(rich / country * 100, 1).max()
 
     # Identify the most popular occupation for those who earn >50K in India.
-    occupation = df.loc[df['native-country'] == 'India', 'occupation']
+    Indian = df[df['native-country'] == 'India']
+    occupation = Indian.loc[Indian['salary'] == '>50K', 'occupation']
     
     top_IN_occupation = occupation.value_counts().idxmax()
 
